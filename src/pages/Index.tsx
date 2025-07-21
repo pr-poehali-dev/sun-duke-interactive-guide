@@ -241,6 +241,24 @@ const Index = () => {
           </Card>
         </div>
       </div>
+
+      {/* Fixed Support Button */}
+      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
+        <Button
+          asChild
+          className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg px-6 py-3 rounded-full"
+        >
+          <a
+            href="https://t.me/lahtion0v"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2"
+          >
+            <Icon name="MessageCircle" size={18} />
+            Поддержка в ТГ
+          </a>
+        </Button>
+      </div>
     </div>
   );
 };
