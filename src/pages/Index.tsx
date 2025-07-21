@@ -228,15 +228,15 @@ const Index = () => {
               {currentStep === 3 && (credentials.login && credentials.password) && (
                 <Card className="bg-amber-900 border-amber-700">
                     <CardContent className="pt-6">
-                      <h4 className="font-medium mb-4 text-amber-800 text-lg">Ваши данные для входа:</h4>
+                      <h4 className="font-medium mb-4 text-amber-200 text-lg">Ваши данные для входа:</h4>
                       <div className="space-y-3">
                         <div className="flex flex-col gap-2">
-                          <span className="font-medium text-amber-700 text-sm">Логин:</span>
-                          <code className="bg-white px-3 py-2 rounded text-base border font-mono break-all">{credentials.login}</code>
+                          <span className="font-medium text-amber-300 text-sm">Логин:</span>
+                          <code className="bg-gray-700 text-gray-200 px-3 py-2 rounded text-base border border-gray-600 font-mono break-all">{credentials.login}</code>
                         </div>
                         <div className="flex flex-col gap-2">
-                          <span className="font-medium text-amber-700 text-sm">Пароль:</span>
-                          <code className="bg-white px-3 py-2 rounded text-base border font-mono break-all">{credentials.password}</code>
+                          <span className="font-medium text-amber-300 text-sm">Пароль:</span>
+                          <code className="bg-gray-700 text-gray-200 px-3 py-2 rounded text-base border border-gray-600 font-mono break-all">{credentials.password}</code>
                         </div>
                       </div>
                     </CardContent>
