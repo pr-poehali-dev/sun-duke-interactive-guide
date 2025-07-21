@@ -178,12 +178,12 @@ const Index = () => {
             </Button>
           </Card>
           
-          <Card className="bg-gray-800 border-gray-600 hover:border-amber-500 transition-colors">
+          <Card className="bg-amber-600 border-amber-500 hover:border-amber-400 transition-colors shadow-lg">
             <Button
               variant="ghost"
               onClick={nextStep}
               disabled={currentStep === steps.length}
-              className="w-full h-full p-6 text-white hover:bg-amber-900 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full h-full p-6 text-white hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
             >
               <div className="flex items-center justify-center gap-3">
                 <span className="font-medium">Вперед</span>
