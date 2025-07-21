@@ -78,7 +78,8 @@ const Index = () => {
     );
   };
 
-  const progress = (completedSteps.length / steps.length) * 100;
+  // Прогресс основан на текущем шаге
+  const progress = (currentStep / steps.length) * 100;
 
   const nextStep = () => {
     if (currentStep < steps.length) {
@@ -95,33 +96,33 @@ const Index = () => {
   // Если нет данных в URL, показываем экран приветствия
   if (!hasCredentials) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 flex items-center justify-center">
-        <Card className="max-w-md w-full mx-4">
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <Card className="max-w-md w-full mx-4 bg-gray-800 border-gray-700">
           <CardHeader className="text-center">
             <img 
               src="https://cdn.poehali.dev/files/1f2f71c9-9139-41ea-b95a-6f66419d9cc0.png" 
               alt="Сундук" 
               className="w-16 h-16 object-contain mx-auto mb-4"
             />
-            <CardTitle className="text-2xl">Добро пожаловать!</CardTitle>
+            <CardTitle className="text-2xl text-white">Добро пожаловать!</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-gray-600 text-center">
+            <p className="text-gray-300 text-center">
               Для использования инструкции необходимо передать данные для входа в аккаунт через URL.
             </p>
-            <Alert>
-              <Icon name="Info" size={16} />
-              <AlertDescription>
+            <Alert className="bg-blue-900 border-blue-700">
+              <Icon name="Info" size={16} className="text-blue-400" />
+              <AlertDescription className="text-blue-200">
                 <strong>Как передать данные:</strong><br/>
                 Добавьте к URL параметры:<br/>
-                <code className="text-sm bg-gray-100 px-2 py-1 rounded">
+                <code className="text-sm bg-gray-700 text-gray-200 px-2 py-1 rounded">
                   ?login=ваш_логин&password=ваш_пароль
                 </code>
               </AlertDescription>
             </Alert>
-            <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
-              <h4 className="font-medium text-amber-800 mb-2">Пример ссылки:</h4>
-              <code className="text-xs bg-white p-2 rounded block border break-all">
+            <div className="bg-amber-900 p-4 rounded-lg border border-amber-700">
+              <h4 className="font-medium text-amber-200 mb-2">Пример ссылки:</h4>
+              <code className="text-xs bg-gray-700 text-gray-200 p-2 rounded block border border-gray-600 break-all">
                 {window.location.origin}?login=example@email.com&password=mypassword123
               </code>
             </div>
@@ -132,9 +133,9 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
+    <div className="min-h-screen bg-gray-900">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b border-amber-200">
+      <div className="bg-gray-800 shadow-sm border-b border-gray-700">
         <div className="max-w-4xl mx-auto px-6 py-4">
           <div className="flex items-center gap-4">
             <img 
@@ -143,15 +144,15 @@ const Index = () => {
               className="w-12 h-12 object-contain"
             />
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Инструкция по активации</h1>
-              <p className="text-gray-600">Магазин игровых аккаунтов "Сундук"</p>
+              <h1 className="text-2xl font-bold text-white">Инструкция по активации</h1>
+              <p className="text-gray-300">Магазин игровых аккаунтов "Сундук"</p>
             </div>
           </div>
           
           <div className="mt-6">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium text-gray-700">Прогресс выполнения</span>
-              <span className="text-sm text-gray-500">{completedSteps.length} из {steps.length}</span>
+              <span className="text-sm font-medium text-gray-300">Прогресс выполнения</span>
+              <span className="text-sm text-gray-400">Шаг {currentStep} из {steps.length}</span>
             </div>
             <Progress value={progress} className="h-2" />
           </div>
@@ -159,7 +160,7 @@ const Index = () => {
       </div>
 
       {/* Horizontal Stepper */}
-      <div className="max-w-6xl mx-auto px-6 py-8">
+      <div className="max-w-4xl mx-auto px-6 py-8">
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             {steps.map((step, index) => (
@@ -169,19 +170,19 @@ const Index = () => {
                   className={`flex flex-col items-center p-3 rounded-lg transition-all ${
                     currentStep === step.id
                       ? 'bg-amber-500 text-white shadow-lg'
-                      : completedSteps.includes(step.id)
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-gray-100 text-gray-600 hover:bg-amber-50'
+                      : currentStep > step.id
+                      ? 'bg-green-700 text-white'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                   }`}
                 >
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center font-medium text-sm mb-2 ${
                     currentStep === step.id
                       ? 'bg-white text-amber-500'
-                      : completedSteps.includes(step.id)
+                      : currentStep > step.id
                       ? 'bg-green-500 text-white'
                       : 'bg-amber-200 text-amber-800'
                   }`}>
-                    {completedSteps.includes(step.id) ? (
+                    {currentStep > step.id ? (
                       <Icon name="Check" size={16} />
                     ) : (
                       step.id
@@ -191,7 +192,7 @@ const Index = () => {
                 </button>
                 {index < steps.length - 1 && (
                   <div className={`flex-1 h-1 mx-2 rounded ${
-                    completedSteps.includes(step.id) ? 'bg-green-300' : 'bg-gray-200'
+                    currentStep > step.id ? 'bg-green-500' : 'bg-gray-600'
                   }`} />
                 )}
               </div>
