@@ -139,9 +139,9 @@ const Index = () => {
         <div className="max-w-4xl mx-auto px-6 py-4">
           <div className="flex items-center gap-4">
             <img 
-              src="https://cdn.poehali.dev/files/1f2f71c9-9139-41ea-b95a-6f66419d9cc0.png" 
+              src="https://cdn.poehali.dev/files/d999ba6f-46bf-441b-811e-ff477b47f708.png" 
               alt="Сундук" 
-              className="w-12 h-12 object-contain"
+              className="w-12 h-12 object-contain rounded-lg"
             />
             <div>
               <h1 className="text-2xl font-bold text-white">Инструкция по активации</h1>
