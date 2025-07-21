@@ -154,7 +154,7 @@ const Index = () => {
               <span className="text-sm font-medium text-gray-300">Прогресс выполнения</span>
               <span className="text-sm text-gray-400">Шаг {currentStep} из {steps.length}</span>
             </div>
-            <Progress value={progress} className="h-2" />
+            <Progress value={progress} className="h-2 [&>div]:bg-amber-500" />
           </div>
         </div>
       </div>
