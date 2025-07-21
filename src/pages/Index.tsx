@@ -202,31 +202,31 @@ const Index = () => {
 
         {/* Current Step Content */}
         <div>
-          <Card className="animate-fade-in">
+          <Card className="animate-fade-in bg-gray-800 border-gray-700 min-h-[400px] flex flex-col">
             <CardHeader>
-              <CardTitle className="text-2xl text-center">
+              <CardTitle className="text-2xl text-center text-white">
                 Шаг {currentStep}: {steps.find(s => s.id === currentStep)?.title}
               </CardTitle>
             </CardHeader>
-              <CardContent className="space-y-6">
-                {steps.find(s => s.id === currentStep)?.warning && (
-                  <Alert className="border-red-200 bg-red-50">
-                    <Icon name="AlertTriangle" size={16} className="text-red-600" />
-                    <AlertDescription className="text-red-800">
-                      {steps.find(s => s.id === currentStep)?.warning}
-                    </AlertDescription>
-                  </Alert>
-                )}
-                
-                <div className="prose max-w-none">
-                  <p className="text-gray-700 leading-relaxed text-lg">
-                    {steps.find(s => s.id === currentStep)?.content}
-                  </p>
-                </div>
+            <CardContent className="space-y-6 flex-1 flex flex-col">
+              {steps.find(s => s.id === currentStep)?.warning && (
+                <Alert className="border-red-700 bg-red-900">
+                  <Icon name="AlertTriangle" size={16} className="text-red-400" />
+                  <AlertDescription className="text-red-200">
+                    {steps.find(s => s.id === currentStep)?.warning}
+                  </AlertDescription>
+                </Alert>
+              )}
+              
+              <div className="prose max-w-none flex-1">
+                <p className="text-gray-200 leading-relaxed text-lg">
+                  {steps.find(s => s.id === currentStep)?.content}
+                </p>
+              </div>
 
-                {/* Credentials Display */}
-                {currentStep === 3 && (credentials.login && credentials.password) && (
-                  <Card className="bg-amber-50 border-amber-200">
+              {/* Credentials Display */}
+              {currentStep === 3 && (credentials.login && credentials.password) && (
+                <Card className="bg-amber-900 border-amber-700">
                     <CardContent className="pt-6">
                       <h4 className="font-medium mb-4 text-amber-800 text-lg">Ваши данные для входа:</h4>
                       <div className="space-y-3">
