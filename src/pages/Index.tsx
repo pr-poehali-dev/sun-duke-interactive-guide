@@ -18,6 +18,7 @@ const Index = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [credentials, setCredentials] = useState({ login: '', password: '' });
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+  const [hasCredentials, setHasCredentials] = useState(false);
 
   // Извлечение логина и пароля из URL
   useEffect(() => {
@@ -25,6 +26,7 @@ const Index = () => {
     const login = urlParams.get('login') || '';
     const password = urlParams.get('password') || '';
     setCredentials({ login, password });
+    setHasCredentials(Boolean(login && password));
   }, []);
 
   const steps: StepData[] = [
@@ -78,6 +80,57 @@ const Index = () => {
 
   const progress = (completedSteps.length / steps.length) * 100;
 
+  const nextStep = () => {
+    if (currentStep < steps.length) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  // Если нет данных в URL, показываем экран приветствия
+  if (!hasCredentials) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 flex items-center justify-center">
+        <Card className="max-w-md w-full mx-4">
+          <CardHeader className="text-center">
+            <img 
+              src="https://cdn.poehali.dev/files/1f2f71c9-9139-41ea-b95a-6f66419d9cc0.png" 
+              alt="Сундук" 
+              className="w-16 h-16 object-contain mx-auto mb-4"
+            />
+            <CardTitle className="text-2xl">Добро пожаловать!</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-gray-600 text-center">
+              Для использования инструкции необходимо передать данные для входа в аккаунт через URL.
+            </p>
+            <Alert>
+              <Icon name="Info" size={16} />
+              <AlertDescription>
+                <strong>Как передать данные:</strong><br/>
+                Добавьте к URL параметры:<br/>
+                <code className="text-sm bg-gray-100 px-2 py-1 rounded">
+                  ?login=ваш_логин&password=ваш_пароль
+                </code>
+              </AlertDescription>
+            </Alert>
+            <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
+              <h4 className="font-medium text-amber-800 mb-2">Пример ссылки:</h4>
+              <code className="text-xs bg-white p-2 rounded block border break-all">
+                {window.location.origin}?login=example@email.com&password=mypassword123
+              </code>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
       {/* Header */}
@@ -114,12 +167,12 @@ const Index = () => {
               <CardHeader>
                 <CardTitle className="text-lg">Шаги</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="space-y-3">
                 {steps.map((step) => (
                   <Button
                     key={step.id}
                     variant={currentStep === step.id ? "default" : "ghost"}
-                    className={`w-full justify-start text-left h-auto p-3 ${
+                    className={`w-full justify-start text-left h-auto p-4 ${
                       completedSteps.includes(step.id) 
                         ? 'bg-green-50 text-green-700 border-green-200' 
                         : currentStep === step.id 
@@ -128,15 +181,15 @@ const Index = () => {
                     }`}
                     onClick={() => setCurrentStep(step.id)}
                   >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-3">
                       {completedSteps.includes(step.id) ? (
-                        <Icon name="CheckCircle" size={16} />
+                        <Icon name="CheckCircle" size={20} className="text-green-600" />
                       ) : (
-                        <span className="w-6 h-6 rounded-full bg-amber-200 text-amber-800 text-xs flex items-center justify-center font-medium">
+                        <span className="w-8 h-8 rounded-full bg-amber-200 text-amber-800 text-sm flex items-center justify-center font-medium flex-shrink-0">
                           {step.id}
                         </span>
                       )}
-                      <span className="text-sm font-medium truncate">
+                      <span className="text-sm font-medium">
                         {step.title.replace(/[⚠️🎮🔑✅📥✈️]/g, '').trim()}
                       </span>
                     </div>
@@ -170,24 +223,24 @@ const Index = () => {
                 )}
                 
                 <div className="prose max-w-none">
-                  <p className="text-gray-700 leading-relaxed text-base">
+                  <p className="text-gray-700 leading-relaxed text-lg">
                     {steps.find(s => s.id === currentStep)?.content}
                   </p>
                 </div>
 
                 {/* Credentials Display */}
-                {currentStep === 3 && (credentials.login || credentials.password) && (
+                {currentStep === 3 && (credentials.login && credentials.password) && (
                   <Card className="bg-amber-50 border-amber-200">
                     <CardContent className="pt-6">
-                      <h4 className="font-medium mb-3 text-amber-800">Ваши данные для входа:</h4>
-                      <div className="space-y-2">
-                        <div className="flex gap-2">
-                          <span className="font-medium text-amber-700">Логин:</span>
-                          <code className="bg-white px-2 py-1 rounded text-sm border">{credentials.login}</code>
+                      <h4 className="font-medium mb-4 text-amber-800 text-lg">Ваши данные для входа:</h4>
+                      <div className="space-y-3">
+                        <div className="flex flex-col gap-2">
+                          <span className="font-medium text-amber-700 text-sm">Логин:</span>
+                          <code className="bg-white px-3 py-2 rounded text-base border font-mono break-all">{credentials.login}</code>
                         </div>
-                        <div className="flex gap-2">
-                          <span className="font-medium text-amber-700">Пароль:</span>
-                          <code className="bg-white px-2 py-1 rounded text-sm border">{credentials.password}</code>
+                        <div className="flex flex-col gap-2">
+                          <span className="font-medium text-amber-700 text-sm">Пароль:</span>
+                          <code className="bg-white px-3 py-2 rounded text-base border font-mono break-all">{credentials.password}</code>
                         </div>
                       </div>
                     </CardContent>
@@ -195,11 +248,11 @@ const Index = () => {
                 )}
 
                 {/* Actions */}
-                <div className="flex gap-3 pt-4">
+                <div className="flex flex-col gap-4 pt-6">
                   <Button
                     onClick={() => toggleStepCompletion(currentStep)}
                     variant={completedSteps.includes(currentStep) ? "outline" : "default"}
-                    className={completedSteps.includes(currentStep) ? "border-green-300 text-green-700" : "bg-amber-500 hover:bg-amber-600"}
+                    className={`w-full ${completedSteps.includes(currentStep) ? "border-green-300 text-green-700" : "bg-amber-500 hover:bg-amber-600"}`}
                   >
                     <Icon 
                       name={completedSteps.includes(currentStep) ? "RotateCcw" : "Check"} 
@@ -209,15 +262,27 @@ const Index = () => {
                     {completedSteps.includes(currentStep) ? 'Отменить' : 'Выполнено'}
                   </Button>
                   
-                  {currentStep < steps.length && (
+                  <div className="flex gap-3">
                     <Button
                       variant="outline"
-                      onClick={() => setCurrentStep(currentStep + 1)}
+                      onClick={prevStep}
+                      disabled={currentStep === 1}
+                      className="flex-1"
                     >
-                      Следующий шаг
+                      <Icon name="ChevronLeft" size={16} className="mr-2" />
+                      Назад
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      onClick={nextStep}
+                      disabled={currentStep === steps.length}
+                      className="flex-1"
+                    >
+                      Вперед
                       <Icon name="ChevronRight" size={16} className="ml-2" />
                     </Button>
-                  )}
+                  </div>
                 </div>
               </CardContent>
             </Card>
