@@ -32,38 +32,38 @@ const Index = () => {
   const steps: StepData[] = [
     {
       id: 1,
-      title: "⚠️ Важные ограничения",
+      title: "Ограничения",
       content: "СТРОГО ЗАПРЕЩЕНО ВХОДИТЬ В ПРОФИЛЬ СО СМАРТФОНА ИЛИ ПК! При попытке входа со стороннего устройства в выдаче будет отказано, без возврата средств.",
       warning: "Используйте только консоль для входа в аккаунт",
       isCompleted: completedSteps.includes(1)
     },
     {
       id: 2,
-      title: "🎮 Создание пользователя",
+      title: "Пользователь",
       content: "На консоли откройте ⚙️ Системные настройки → Пользователь → Добавить пользователя → Создать нового пользователя. Выберите любые аватарку и ник, нажмите ОК.",
       isCompleted: completedSteps.includes(2)
     },
     {
       id: 3,
-      title: "🔑 Вход в аккаунт",
+      title: "Вход",
       content: `Нажмите "Войти и установить связь". Когда появится QR, выберите "Другой способ для входа". Введите логин: ${credentials.login || '[будет показан в URL]'} и пароль: ${credentials.password || '[будет показан в URL]'}`,
       isCompleted: completedSteps.includes(3)
     },
     {
       id: 4,
-      title: "✅ Завершение настройки",
+      title: "Настройки",
       content: "Уточните у продавца код подтверждения и быстро введите его. Нажмите Далее → Связать → ОК. В разделе Пользователи выберите новый профиль и установите Настройки онлайн-лицензии в положение ВКЛ.",
       isCompleted: completedSteps.includes(4)
     },
     {
       id: 5,
-      title: "📥 Загрузка игр",
+      title: "Загрузка",
       content: "Вернитесь на 🏠 Домашнюю страницу. Откройте Виртуальные игровые карты → выберите добавленного пользователя → нажмите на игру → Параметры → Загрузить данные.",
       isCompleted: completedSteps.includes(5)
     },
     {
       id: 6,
-      title: "✈️ Важная памятка",
+      title: "Памятка",
       content: "Игры запускаются только с интернетом. СРАЗУ после запуска игры включайте режим полёта! Не меняйте данные профиля. Несоблюдение может привести к слёту аккаунта.",
       warning: "Обязательно включайте режим полёта после запуска игры",
       isCompleted: completedSteps.includes(6)
@@ -158,60 +158,55 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-6 py-8">
-        <div className="grid lg:grid-cols-4 gap-6">
-          {/* Steps Navigation */}
-          <div className="lg:col-span-1">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Шаги</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {steps.map((step) => (
-                  <Button
-                    key={step.id}
-                    variant={currentStep === step.id ? "default" : "ghost"}
-                    className={`w-full justify-start text-left h-auto p-4 ${
-                      completedSteps.includes(step.id) 
-                        ? 'bg-green-50 text-green-700 border-green-200' 
-                        : currentStep === step.id 
-                        ? 'bg-amber-500 text-white' 
-                        : 'hover:bg-amber-50'
-                    }`}
-                    onClick={() => setCurrentStep(step.id)}
-                  >
-                    <div className="flex items-center gap-3">
-                      {completedSteps.includes(step.id) ? (
-                        <Icon name="CheckCircle" size={20} className="text-green-600" />
-                      ) : (
-                        <span className="w-8 h-8 rounded-full bg-amber-200 text-amber-800 text-sm flex items-center justify-center font-medium flex-shrink-0">
-                          {step.id}
-                        </span>
-                      )}
-                      <span className="text-sm font-medium">
-                        {step.title.replace(/[⚠️🎮🔑✅📥✈️]/g, '').trim()}
-                      </span>
-                    </div>
-                  </Button>
-                ))}
-              </CardContent>
-            </Card>
+      {/* Horizontal Stepper */}
+      <div className="max-w-6xl mx-auto px-6 py-8">
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            {steps.map((step, index) => (
+              <div key={step.id} className="flex items-center flex-1">
+                <button
+                  onClick={() => setCurrentStep(step.id)}
+                  className={`flex flex-col items-center p-3 rounded-lg transition-all ${
+                    currentStep === step.id
+                      ? 'bg-amber-500 text-white shadow-lg'
+                      : completedSteps.includes(step.id)
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-gray-100 text-gray-600 hover:bg-amber-50'
+                  }`}
+                >
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-medium text-sm mb-2 ${
+                    currentStep === step.id
+                      ? 'bg-white text-amber-500'
+                      : completedSteps.includes(step.id)
+                      ? 'bg-green-500 text-white'
+                      : 'bg-amber-200 text-amber-800'
+                  }`}>
+                    {completedSteps.includes(step.id) ? (
+                      <Icon name="Check" size={16} />
+                    ) : (
+                      step.id
+                    )}
+                  </div>
+                  <span className="text-xs font-medium text-center">{step.title}</span>
+                </button>
+                {index < steps.length - 1 && (
+                  <div className={`flex-1 h-1 mx-2 rounded ${
+                    completedSteps.includes(step.id) ? 'bg-green-300' : 'bg-gray-200'
+                  }`} />
+                )}
+              </div>
+            ))}
           </div>
+        </div>
 
-          {/* Current Step Content */}
-          <div className="lg:col-span-3">
-            <Card className="animate-fade-in">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-xl">
-                    {steps.find(s => s.id === currentStep)?.title}
-                  </CardTitle>
-                  <Badge variant={completedSteps.includes(currentStep) ? "default" : "secondary"}>
-                    {completedSteps.includes(currentStep) ? 'Выполнено' : 'В процессе'}
-                  </Badge>
-                </div>
-              </CardHeader>
+        {/* Current Step Content */}
+        <div>
+          <Card className="animate-fade-in">
+            <CardHeader>
+              <CardTitle className="text-2xl text-center">
+                Шаг {currentStep}: {steps.find(s => s.id === currentStep)?.title}
+              </CardTitle>
+            </CardHeader>
               <CardContent className="space-y-6">
                 {steps.find(s => s.id === currentStep)?.warning && (
                   <Alert className="border-red-200 bg-red-50">
@@ -247,46 +242,31 @@ const Index = () => {
                   </Card>
                 )}
 
-                {/* Actions */}
-                <div className="flex flex-col gap-4 pt-6">
+                {/* Navigation */}
+                <div className="flex justify-center gap-4 pt-8">
                   <Button
-                    onClick={() => toggleStepCompletion(currentStep)}
-                    variant={completedSteps.includes(currentStep) ? "outline" : "default"}
-                    className={`w-full ${completedSteps.includes(currentStep) ? "border-green-300 text-green-700" : "bg-amber-500 hover:bg-amber-600"}`}
+                    variant="outline"
+                    onClick={prevStep}
+                    disabled={currentStep === 1}
+                    size="lg"
+                    className="px-8"
                   >
-                    <Icon 
-                      name={completedSteps.includes(currentStep) ? "RotateCcw" : "Check"} 
-                      size={16} 
-                      className="mr-2" 
-                    />
-                    {completedSteps.includes(currentStep) ? 'Отменить' : 'Выполнено'}
+                    <Icon name="ChevronLeft" size={20} className="mr-2" />
+                    Назад
                   </Button>
                   
-                  <div className="flex gap-3">
-                    <Button
-                      variant="outline"
-                      onClick={prevStep}
-                      disabled={currentStep === 1}
-                      className="flex-1"
-                    >
-                      <Icon name="ChevronLeft" size={16} className="mr-2" />
-                      Назад
-                    </Button>
-                    
-                    <Button
-                      variant="outline"
-                      onClick={nextStep}
-                      disabled={currentStep === steps.length}
-                      className="flex-1"
-                    >
-                      Вперед
-                      <Icon name="ChevronRight" size={16} className="ml-2" />
-                    </Button>
-                  </div>
+                  <Button
+                    onClick={nextStep}
+                    disabled={currentStep === steps.length}
+                    size="lg"
+                    className="px-8 bg-amber-500 hover:bg-amber-600"
+                  >
+                    Вперед
+                    <Icon name="ChevronRight" size={20} className="ml-2" />
+                  </Button>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
