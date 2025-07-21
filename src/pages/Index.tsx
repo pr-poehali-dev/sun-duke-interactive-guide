@@ -102,7 +102,7 @@ const Index = () => {
             <img 
               src="https://cdn.poehali.dev/files/1f2f71c9-9139-41ea-b95a-6f66419d9cc0.png" 
               alt="Сундук" 
-              className="w-16 h-16 object-contain mx-auto mb-4"
+              className="w-16 h-16 object-contain mx-auto mb-4 rounded-xl"
             />
             <CardTitle className="text-2xl text-white">Добро пожаловать!</CardTitle>
           </CardHeader>
