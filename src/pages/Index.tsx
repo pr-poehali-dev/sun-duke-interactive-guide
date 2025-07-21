@@ -204,9 +204,35 @@ const Index = () => {
         <div>
           <Card className="animate-fade-in bg-gray-800 border-gray-700 min-h-[400px] flex flex-col">
             <CardHeader>
-              <CardTitle className="text-2xl text-center text-white">
-                Шаг {currentStep}: {steps.find(s => s.id === currentStep)?.title}
-              </CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-2xl text-white">
+                  Шаг {currentStep}: {steps.find(s => s.id === currentStep)?.title}
+                </CardTitle>
+                
+                {/* Navigation Buttons */}
+                <div className="flex gap-3">
+                  <Button
+                    variant="outline"
+                    onClick={prevStep}
+                    disabled={currentStep === 1}
+                    size="sm"
+                    className="border-gray-600 text-gray-200 hover:bg-gray-700"
+                  >
+                    <Icon name="ChevronLeft" size={16} className="mr-1" />
+                    Назад
+                  </Button>
+                  
+                  <Button
+                    onClick={nextStep}
+                    disabled={currentStep === steps.length}
+                    size="sm"
+                    className="bg-amber-500 hover:bg-amber-600 text-white"
+                  >
+                    Вперед
+                    <Icon name="ChevronRight" size={16} className="ml-1" />
+                  </Button>
+                </div>
+              </div>
             </CardHeader>
             <CardContent className="space-y-6 flex-1 flex flex-col">
               {steps.find(s => s.id === currentStep)?.warning && (
@@ -243,29 +269,7 @@ const Index = () => {
                   </Card>
                 )}
 
-                {/* Navigation */}
-                <div className="flex justify-center gap-4 pt-8">
-                  <Button
-                    variant="outline"
-                    onClick={prevStep}
-                    disabled={currentStep === 1}
-                    size="lg"
-                    className="px-8"
-                  >
-                    <Icon name="ChevronLeft" size={20} className="mr-2" />
-                    Назад
-                  </Button>
-                  
-                  <Button
-                    onClick={nextStep}
-                    disabled={currentStep === steps.length}
-                    size="lg"
-                    className="px-8 bg-amber-500 hover:bg-amber-600"
-                  >
-                    Вперед
-                    <Icon name="ChevronRight" size={20} className="ml-2" />
-                  </Button>
-                </div>
+
             </CardContent>
           </Card>
         </div>
