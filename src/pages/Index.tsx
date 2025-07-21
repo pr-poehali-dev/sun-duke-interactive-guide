@@ -178,7 +178,7 @@ const Index = () => {
                     onClick={prevStep}
                     disabled={currentStep === 1}
                     size="sm"
-                    className="border-gray-600 text-gray-200 hover:bg-gray-700"
+                    className="border-gray-600 text-black hover:bg-gray-700 hover:text-white"
                   >
                     <Icon name="ChevronLeft" size={16} className="mr-1" />
                     Назад
