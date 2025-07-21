@@ -159,46 +159,8 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Horizontal Stepper */}
+      {/* Main Content */}
       <div className="max-w-4xl mx-auto px-6 py-8">
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            {steps.map((step, index) => (
-              <div key={step.id} className="flex items-center flex-1">
-                <button
-                  onClick={() => setCurrentStep(step.id)}
-                  className={`flex flex-col items-center p-3 rounded-lg transition-all ${
-                    currentStep === step.id
-                      ? 'bg-amber-500 text-white shadow-lg'
-                      : currentStep > step.id
-                      ? 'bg-green-700 text-white'
-                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  }`}
-                >
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-medium text-sm mb-2 ${
-                    currentStep === step.id
-                      ? 'bg-white text-amber-500'
-                      : currentStep > step.id
-                      ? 'bg-green-500 text-white'
-                      : 'bg-amber-200 text-amber-800'
-                  }`}>
-                    {currentStep > step.id ? (
-                      <Icon name="Check" size={16} />
-                    ) : (
-                      step.id
-                    )}
-                  </div>
-                  <span className="text-xs font-medium text-center">{step.title}</span>
-                </button>
-                {index < steps.length - 1 && (
-                  <div className={`flex-1 h-1 mx-2 rounded ${
-                    currentStep > step.id ? 'bg-green-500' : 'bg-gray-600'
-                  }`} />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
 
         {/* Current Step Content */}
         <div>
