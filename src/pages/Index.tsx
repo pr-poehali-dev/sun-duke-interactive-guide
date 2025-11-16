@@ -104,7 +104,7 @@ const Index = () => {
               alt="Сундук" 
               className="w-16 h-16 object-contain mx-auto mb-4 rounded-xl"
             />
-            <CardTitle className="text-2xl text-white">Добро пожаловать!</CardTitle>
+            <CardTitle className="text-2xl text-white">Добро пожаловать</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-gray-300 text-center">
